@@ -15,7 +15,7 @@ class SBM():
     def is_bichromatic(self, u, v):
         return (u < self.n / 2) != (v < self.n / 2)
 
-    def get_bichromatic_ratio(self):
+    def get_bichromatic_fraction(self):
         bichromatic = 0
         for (x, y) in self.g.edges():
             if self.is_bichromatic(x, y):
@@ -34,17 +34,27 @@ class SBM():
                 else:
                     monochromatic += 1
         return monochromatic, bichromatic
-
-    def count_possible_local_bridges(self):
+    
+    def _count_possible_edges(self, local_bridge):
         monochromatic, bichromatic = 0, 0
         for u in range(self.n):
             for v in range(u+1, self.n):
-                if not self.g.has_edge(u, v) and self.is_local_bridge(u, v):
+                if not self.g.has_edge(u, v) and \
+                     (self.is_local_bridge(u, v) == local_bridge):
                     if self.is_bichromatic(u, v):
                         bichromatic += 1
                     else:
                         monochromatic += 1
         return monochromatic, bichromatic
+
+    def count_possible_local_bridges(self):
+        return self._count_possible_edges(local_bridge=True)
+    
+    def count_possible_closures(self):
+        return self._count_possible_edges(local_bridge=False)
+
+    def count_wedges(self):
+        pass
 
     def predicted_monochromatic_wedges(self):
         return 3 * 2 * comb(self.n/2, 3) * self.p**2 * (1-self.p) \

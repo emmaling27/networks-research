@@ -54,7 +54,10 @@ class SBM():
         return self._count_possible_edges(local_bridge=False)
 
     def count_wedges(self):
-        pass
+        count = 0
+        for v in self.g.nodes():
+            count += sum(range(1, len(list(self.g.neighbors(v)))))
+        return count
 
     def predicted_monochromatic_wedges(self):
         return 3 * 2 * comb(self.n/2, 3) * self.p**2 * (1-self.p) \

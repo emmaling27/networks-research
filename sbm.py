@@ -54,10 +54,17 @@ class SBM():
         return self._count_possible_edges(local_bridge=False)
 
     def count_wedges(self):
-        count = 0
+        monochromatic, bichromatic = 0, 0
         for v in self.g.nodes():
-            count += sum(range(1, len(list(self.g.neighbors(v)))))
-        return count
+            sorted_neighbors = sorted(self.g.neighbors(v))
+            for i in range(len(sorted_neighbors)):
+                for j in range(i + 1, len(sorted_neighbors)):
+                    if not self.g.has_edge(sorted_neighbors[i], sorted_neighbors[j]):
+                        if self.is_bichromatic(sorted_neighbors[i], sorted_neighbors[j]):
+                            bichromatic += 1
+                        else:
+                            monochromatic += 1
+        return monochromatic, bichromatic
 
     def predicted_monochromatic_wedges(self):
         return 3 * 2 * comb(self.n/2, 3) * self.p**2 * (1-self.p) \

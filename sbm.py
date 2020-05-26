@@ -2,6 +2,7 @@ import networkx as nx
 from scipy.special import comb
 import attr
 
+
 @attr.s
 class Count(object):
     n = attr.ib()
@@ -13,6 +14,7 @@ class Count(object):
             self.bichromatic += 1
         else:
             self.monochromatic += 1
+
 
 class SBM():
 
@@ -27,7 +29,6 @@ class SBM():
 
     def is_bichromatic(self, u, v):
         return (u < self.n / 2) != (v < self.n / 2)
-    
 
     def get_bichromatic_fraction(self):
         bichromatic = 0
@@ -83,9 +84,8 @@ class SBM():
         )
 
     def predicted_local_bridges(self):
-        wedges = self.predicted_wedges()
         return Count(
             self.n,
-            monochromatic=2 * (1-self.p) * comb(self.n/2, 2) - wedges.monochromatic,
-            bichromatic=(1-self.q) * (self.n/2) ** 2 - wedges.bichromatic
+            monochromatic=2 * (1-self.p) * comb(self.n/2, 2) * (1-self.p**2)**(self.n/2-2) * (1-self.q**2)**(self.n/2),
+            bichromatic=(1-self.q) * (self.n/2) ** 2 * (1-self.p*self.q)**(self.n-2)
         )

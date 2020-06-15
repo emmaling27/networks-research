@@ -96,3 +96,10 @@ class SBM():
             monochromatic=2 * (1-self.p) * comb(self.n/2, 2) * (1 - (1-self.p**2)**(self.n/2-2) * (1-self.q**2)**(self.n/2)),
             bichromatic=(1-self.q) * (self.n/2) ** 2 * (1 - (1-self.p*self.q)**(self.n-2))
         )
+    
+    def predicted_possible_edges(self):
+        return Count(
+            self.n,
+            monochromatic=2 * (1-self.p) * comb(self.n/2, 2),
+            bichromatic=(1-self.q) * (self.n/2) ** 2
+        )

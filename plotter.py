@@ -91,7 +91,7 @@ class Plotter():
         plt.savefig(join(
             self.plots_path, 
             name, 
-            'bichromatic_fractions_w_and_b_' + 'bucket' + str(self.bucket_size) + '.png'))
+            'w_and_b_' + 'bucket' + str(self.bucket_size) + '.png'))
         plt.show()
 
     def plot_marginal_bichromatic_fraction_diff_over_time(self, counts, name):
@@ -107,7 +107,7 @@ class Plotter():
         plt.xlabel("Time")
         plt.ylabel("Difference")
         plt.title(name + " w_b/w-f(e) and b_b/b-f(e)")
-        plt.savefig(join(self.plots_path, name, 'w-f(e)_b-f(e).png'))
+        plt.savefig(join(self.plots_path, name, 'w-f(e)_b-f(e)_bucket' + str(self.bucket_size) + '.png'))
         plt.show()
 
     def plot_all(self):

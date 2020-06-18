@@ -21,7 +21,7 @@ class HighSchoolDataCleaner():
         return df
 
     def clean_all_data(self, t=None):
-        """Creates and saves bill dfs of all congresses, optionally below threshold t"""
+        """Creates and saves network dfs for high schools in 2011 and 2012"""
         for year in range(2011, 2013):
             hs_df = pd.read_csv(join(self.raw_path, 'highschool_' + str(year) + '.tsv'), sep='\t')
             type_df = pd.read_csv(join(self.raw_path, 'metadata_' + str(year) + '.tsv'), sep='\t')

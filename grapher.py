@@ -5,6 +5,7 @@ from os.path import isfile, join
 import pickle
 import pandas as pd
 from networkx.readwrite.gpickle import write_gpickle, read_gpickle
+from sbm import SBM
 
 class Grapher():
 
@@ -15,7 +16,7 @@ class Grapher():
     def get_counts_over_time(self, df):
         """Output graph and count object with bichromatic fractions, f(w), f(b), f(w_b), f(b_b)"""
         g = nx.Graph()
-        counts = {'f(w)': [], 'f(w_b)': [],'f(b)': [], 'f(b_b)': [], 'bi_fraction':[0]}
+        counts = {'f(w)': [], 'f(w_b)': [],'f(b)': [], 'f(b_b)': [], 'bi_fraction': [0], 'nodes': [], 'edges': []}
         w, w_b, b, b_b = 0, 0, 0, 0
         last_time = 0
         for _, row in df.iterrows():
@@ -37,12 +38,16 @@ class Grapher():
                 counts['bi_fraction'].append((w_b + b_b) / (w + b))
                 counts['f(b_b)'].append(b_b)
                 counts['f(b)'].append(b)
+                counts['nodes'].append(g.number_of_nodes())
+                counts['edges'].append(g.number_of_edges())
                 last_time = this_time
         counts['f(w_b)'].append(w_b)
         counts['f(w)'].append(w)
         counts['bi_fraction'].append((w_b + b_b) / (w + b))
         counts['f(b_b)'].append(b_b)
         counts['f(b)'].append(b)
+        counts['nodes'].append(g.number_of_nodes())
+        counts['edges'].append(g.number_of_edges())
         for item in counts:
             counts[item] = np.array(counts[item])
         return g, counts

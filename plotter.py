@@ -25,7 +25,7 @@ class Plotter():
             (counts['f(w_b)'] / counts['f(w)'])[self.start:])
         plt.xlabel("Time")
         plt.ylabel("f(w)")
-        plt.title(name + " f(w)")
+        plt.title(name)
         plt.savefig(join(self.plots_path, name, 'f_t(w).png'))
         plt.show()
 
@@ -39,7 +39,7 @@ class Plotter():
             (counts['f(b_b)'] / counts['f(b)'])[self.start:] - counts['bi_fraction'][self.start:-1],
             label='f(b)-f(e)')
         plt.xlabel("Time")
-        plt.ylabel("Difference")
+        plt.ylabel("Difference in Bichromatic Fractions")
         plt.legend()
         plt.title(name + " f(w)-f(e) and f(b)-f(e)")
         plt.savefig(join(self.plots_path, name, 'f(w)-f(e)_f(b)-f(e).png'))
@@ -51,7 +51,7 @@ class Plotter():
             ((counts['f(w_b)'] / counts['f(w)']) / (counts['f(b_b)'] / counts['f(b)']))[self.start:])
         plt.xlabel("Time")
         plt.ylabel("f(w) / f(b)")
-        plt.title(name + " f(w) / f(b)")
+        plt.title(name)
         plt.savefig(join(self.plots_path, name, 'f(w)_over_f(b).png'))
         plt.show()
 
@@ -61,7 +61,7 @@ class Plotter():
             (counts['f(b_b)'] / counts['f(b)'])[self.start:])
         plt.xlabel("Time")
         plt.ylabel("f(b)")
-        plt.title(name + " f(b)")
+        plt.title(name)
         plt.savefig(join(self.plots_path, name, 'f(b).png'))
         plt.show()
 
@@ -76,8 +76,8 @@ class Plotter():
             label="f(b)")
         plt.legend()
         plt.xlabel("Time")
-        plt.ylabel("Cumulative Bichromatic Ratio")
-        plt.title(name + " f(w) and f(b)")
+        plt.ylabel("Cumulative Bichromatic Fraction")
+        plt.title(name)
         plt.savefig(join(self.plots_path, name, 'f(b)_and_f(w).png'))
         plt.show()
     
@@ -86,8 +86,8 @@ class Plotter():
         plt.plot(range(len(counts['b_b/b'])), counts['b_b/b'], label="b_b/b")
         plt.legend()
         plt.xlabel("Time")
-        plt.ylabel("Marginal Bichromatic Ratio")
-        plt.title(name + " w_b/w and b_b/b")
+        plt.ylabel("Marginal Bichromatic Fraction")
+        plt.title(name)
         plt.savefig(join(
             self.plots_path, 
             name, 
@@ -105,8 +105,8 @@ class Plotter():
             label='b_b/b-f(e)')
         plt.legend()
         plt.xlabel("Time")
-        plt.ylabel("Difference")
-        plt.title(name + " w_b/w-f(e) and b_b/b-f(e)")
+        plt.ylabel("Difference in Marginal Bichromatic Fractions")
+        plt.title(name)
         plt.savefig(join(self.plots_path, name, 'w-f(e)_b-f(e)_bucket' + str(self.bucket_size) + '.png'))
         plt.show()
 
@@ -127,8 +127,6 @@ class Plotter():
                 print('plots ' + file_name + ' directory already exists')
             counts['w_b/w'] = np.nan_to_num((self.get_marginal_counts(counts['f(w_b)']) / self.get_marginal_counts(counts['f(w)'])))
             counts['b_b/b'] = np.nan_to_num((self.get_marginal_counts(counts['f(b_b)']) / self.get_marginal_counts(counts['f(b)'])))
-            print(counts['w_b/w'])
-            print(counts['b_b/b'])
             self.plot_f_w_over_time(counts, file_name)
             self.plot_bichromatic_fraction_diff_over_time(counts, file_name)
             self.plot_f_b_over_time(counts, file_name)

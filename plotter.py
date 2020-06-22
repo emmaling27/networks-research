@@ -17,6 +17,16 @@ class Plotter():
         for i in range(1, len(arr), self.bucket_size):
             marginal_counts.append(arr[i] - arr[i-self.bucket_size])
         return np.nan_to_num(np.array(marginal_counts))
+    
+    def plot_edges_over_time(self, counts, name):
+        plt.plot(
+            range(self.start, len(counts['edges'])), 
+            counts['edges'][self.start:])
+        plt.xlabel("Time")
+        plt.ylabel("Number of Edges")
+        plt.title(name)
+        plt.savefig(join(self.plots_path, name, 'edges.png'))
+        plt.show()
 
     def plot_f_w_over_time(self, counts, name):
         """Plot cumulative bichromatic fraction of edges added via triadic closure over time"""
@@ -127,6 +137,7 @@ class Plotter():
                 print('plots ' + file_name + ' directory already exists')
             counts['w_b/w'] = np.nan_to_num((self.get_marginal_counts(counts['f(w_b)']) / self.get_marginal_counts(counts['f(w)'])))
             counts['b_b/b'] = np.nan_to_num((self.get_marginal_counts(counts['f(b_b)']) / self.get_marginal_counts(counts['f(b)'])))
+            self.plot_edges_over_time(counts, file_name)
             self.plot_f_w_over_time(counts, file_name)
             self.plot_bichromatic_fraction_diff_over_time(counts, file_name)
             self.plot_f_b_over_time(counts, file_name)

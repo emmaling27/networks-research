@@ -18,6 +18,16 @@ class Plotter():
             marginal_counts.append(arr[i] - arr[i-self.bucket_size])
         return np.nan_to_num(np.array(marginal_counts))
     
+    def plot_nodes_over_time(self, counts, name):
+        plt.plot(
+            range(self.start, len(counts['nodes'])), 
+            counts['nodes'][self.start:])
+        plt.xlabel("Time")
+        plt.ylabel("Number of Nodes")
+        plt.title(name)
+        plt.savefig(join(self.plots_path, name, 'nodes.png'))
+        plt.show()
+    
     def plot_edges_over_time(self, counts, name):
         plt.plot(
             range(self.start, len(counts['edges'])), 
@@ -137,6 +147,7 @@ class Plotter():
                 print('plots ' + file_name + ' directory already exists')
             counts['w_b/w'] = np.nan_to_num((self.get_marginal_counts(counts['f(w_b)']) / self.get_marginal_counts(counts['f(w)'])))
             counts['b_b/b'] = np.nan_to_num((self.get_marginal_counts(counts['f(b_b)']) / self.get_marginal_counts(counts['f(b)'])))
+            self.plot_nodes_over_time(counts, file_name)
             self.plot_edges_over_time(counts, file_name)
             self.plot_f_w_over_time(counts, file_name)
             self.plot_bichromatic_fraction_diff_over_time(counts, file_name)

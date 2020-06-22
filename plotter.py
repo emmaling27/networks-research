@@ -41,7 +41,7 @@ class Plotter():
         plt.xlabel("Time")
         plt.ylabel("Difference in Bichromatic Fractions")
         plt.legend()
-        plt.title(name + " f(w)-f(e) and f(b)-f(e)")
+        plt.title(name)
         plt.savefig(join(self.plots_path, name, 'f(w)-f(e)_f(b)-f(e).png'))
         plt.show()
 

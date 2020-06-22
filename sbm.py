@@ -5,6 +5,7 @@ import attr
 
 @attr.s
 class Count(object):
+    """Count class with monochromatic and bichromatic counts"""
     n = attr.ib()
     monochromatic = attr.ib(default=0)
     bichromatic = attr.ib(default=0)
@@ -17,7 +18,7 @@ class Count(object):
 
 
 class SBM():
-
+    """SBM class with predicted numbers of wedges and local bridges and actual counts"""
     def __init__(self, n, p, q, seed=0):
         self.n = n
         self.p = p

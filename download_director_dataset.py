@@ -1,5 +1,9 @@
 import wget
 
+"""
+Downloads the director dataset from http://www.boardsandgender.com/data
+"""
+
 for year in range(2002, 2012):
     for month in range(1, 13):
         month_str = str(month)
